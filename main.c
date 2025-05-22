@@ -36,7 +36,15 @@ const char* tipeToStr(TipeKendaraan tipe) {
 }
 
 int main() {
-	
+    int jumlahSektor, jumlahAngkot, jumlahBus;
+    Sektor sektor[MAX_SEKTOR];
+
+    printf("Masukkan jumlah angkot awal: ");
+    scanf("%d", &jumlahAngkot);
+    printf("Masukkan jumlah bis awal: ");
+    scanf("%d", &jumlahBus);
+    printf("Masukkan jumlah sektor: ");
+    scanf("%d", &jumlahSektor);
 	return 0;
 }
 
