@@ -23,7 +23,20 @@ typedef struct {
     int kendaraan_dialokasikan;
 } Sektor;
 
+int kapasitas(JenisKendaraan jenis) {
+    return (jenis == ANGKOT) ? 4 : 20;
+}
+
+const char* jenisToStr(JenisKendaraan jenis) {
+    return (jenis == ANGKOT) ? "Angkot" : "Bus";
+}
+
+const char* tipeToStr(TipeKendaraan tipe) {
+    return (tipe == LISTRIK) ? "Listrik" : "Diesel";
+}
+
 int main() {
 	
 	return 0;
 }
+
