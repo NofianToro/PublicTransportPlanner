@@ -117,6 +117,9 @@ int main()
         printf("  - Jumlah kendaraan dialokasikan: %d\n", sektor[i].kendaraan_dialokasikan);
         printf("--------------------------------------\n");
     }
+	printf("\n======= SISA KENDARAAN =======\n");
+    printf("  - Angkot: %d\n", jumlahAngkot);
+    printf("  - Bis   : %d\n", jumlahBus);
 	
 	return 0;
 }
