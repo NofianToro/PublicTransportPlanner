@@ -106,6 +106,17 @@ int main()
             jumlahBus -= sektor[i].kendaraan_dialokasikan;
         }
     }
+
+	printf("\n======= HASIL DISTRIBUSI KENDARAAN =======\n");
+    for (int i = 0; i < jumlahSektor; i++) {
+        printf("SEKTOR %d (%s)\n", i + 1, sektor[i].nama);
+        printf("  - Jarak: %.1f km\n", sektor[i].jarak);
+        printf("  - Demand: %d\n", sektor[i].demand);
+        printf("  - Jenis kendaraan: %s\n", jenisToStr(sektor[i].jenis));
+        printf("  - Tipe kendaraan : %s\n", tipeToStr(sektor[i].tipe));
+        printf("  - Jumlah kendaraan dialokasikan: %d\n", sektor[i].kendaraan_dialokasikan);
+        printf("--------------------------------------\n");
+    }
 	
 	return 0;
 }
