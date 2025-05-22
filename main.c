@@ -81,5 +81,31 @@ int main()
 		sektor[i].kendaraan_dialokasikan = 0;
 	}
 	
+	for (int i = 0; i < jumlahSektor; i++) {
+        int kapas = kapasitas(sektor[i].jenis);
+        sektor[i].kendaraan_dialokasikan = sektor[i].demand / kapas;
+        if (sektor[i].demand % kapas != 0)
+            sektor[i].kendaraan_dialokasikan += 1;
+
+        if (sektor[i].jenis == ANGKOT) {
+            jumlahAngkot -= sektor[i].kendaraan_dialokasikan;
+        } else {
+            jumlahBus -= sektor[i].kendaraan_dialokasikan;
+        }
+    }
+
+    for (int i = 0; i < jumlahSektor; i++) {
+        if ((sektor[i].jenis == ANGKOT && jumlahAngkot < 0) && jumlahBus > 0) {
+            sektor[i].jenis = BUS;
+            int kapas = kapasitas(BUS);
+            sektor[i].kendaraan_dialokasikan = sektor[i].demand / kapas;
+            if (sektor[i].demand % kapas != 0)
+                sektor[i].kendaraan_dialokasikan += 1;
+
+            jumlahAngkot += sektor[i].kendaraan_dialokasikan;
+            jumlahBus -= sektor[i].kendaraan_dialokasikan;
+        }
+    }
+	
 	return 0;
 }
