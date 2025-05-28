@@ -28,7 +28,7 @@ typedef struct
 
 int kapasitas(JenisKendaraan jenis)
 {
-	return (jenis == ANGKOT) ? 4 : 20;
+	return (jenis == ANGKOT) ? 7 : 20;
 }
 
 const char *jenisToStr(JenisKendaraan jenis)
@@ -62,7 +62,7 @@ int main()
 		scanf("%f", &sektor[i].jarak);
 		printf("Melalui jalan raya? (y/n): ");
 		scanf(" %c", &sektor[i].jalan_raya);
-		printf("Demand kendaraan: ");
+		printf("Demand : ");
 		scanf("%d", &sektor[i].demand);
 
 		// Tentukan jenis kendaraan
