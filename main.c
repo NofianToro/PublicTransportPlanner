@@ -44,6 +44,37 @@ const char *tipeToStr(TipeKendaraan tipe)
 	return (tipe == LISTRIK) ? "Listrik" : "Diesel";
 }
 
+void alokasikanKendaraan(Sektor *s, int *jumlahBus, int *jumlahAngkot)
+{
+	int sisa = s->demand;
+
+	if (s->jalan_raya == 'y' && *jumlahBus > 0 && sisa > 0)
+	{
+		int kapasBus = kapasitas(BUS);
+		int butuhBus = (sisa + kapasBus - 1) / kapasBus;
+		int pakaiBus = (butuhBus > *jumlahBus) ? *jumlahBus : butuhBus;
+
+		s->bus_dialokasikan = pakaiBus;
+		*jumlahBus -= pakaiBus;
+
+		sisa -= pakaiBus * kapasBus;
+	}
+
+	if (sisa > 0 && *jumlahAngkot > 0)
+	{
+		int kapasAngkot = kapasitas(ANGKOT);
+		int butuhAngkot = (sisa + kapasAngkot - 1) / kapasAngkot;
+		int pakaiAngkot = (butuhAngkot > *jumlahAngkot) ? *jumlahAngkot : butuhAngkot;
+
+		s->angkot_dialokasikan = pakaiAngkot;
+		*jumlahAngkot -= pakaiAngkot;
+
+		sisa -= pakaiAngkot * kapasAngkot;
+	}
+
+	s->permintaan_terpenuhi = (sisa > 0 && *jumlahBus <= 0 && *jumlahAngkot <= 0) ? 0 : 1;
+}
+
 int main()
 {
 	int jumlahSektor, jumlahAngkot, jumlahBus, sisaAngkot, sisaBus;
@@ -73,42 +104,7 @@ int main()
 		sektor[i].bus_dialokasikan = 0;
 
 		// Mulai alokasi kendaraan
-		int sisa = sektor[i].demand;
-
-		// Jika sektor memiliki jalan raya, alokasikan bus terlebih dahulu
-		if (sektor[i].jalan_raya == 'y' && jumlahBus > 0 && sisa > 0)
-		{
-			int kapasBus = kapasitas(BUS);
-			int butuhBus = (sisa + kapasBus - 1) / kapasBus;
-			int pakaiBus = (butuhBus > jumlahBus) ? jumlahBus : butuhBus;
-
-			sektor[i].bus_dialokasikan = pakaiBus;
-			jumlahBus -= pakaiBus;
-
-			sisa -= pakaiBus * kapasBus;
-		}
-
-		// Alokasikan angkot untuk sisa demand
-		if (sisa > 0 && jumlahAngkot > 0)
-		{
-			int kapasAngkot = kapasitas(ANGKOT);
-			int butuhAngkot = (sisa + kapasAngkot - 1) / kapasAngkot;
-			int pakaiAngkot = (butuhAngkot > jumlahAngkot) ? jumlahAngkot : butuhAngkot;
-
-			sektor[i].angkot_dialokasikan = pakaiAngkot;
-			jumlahAngkot -= pakaiAngkot;
-
-			sisa -= pakaiAngkot * kapasAngkot;
-		}
-
-		if (sisa > 0 && jumlahAngkot <= 0 && jumlahBus <= 0)
-		{
-			sektor[i].permintaan_terpenuhi = 0;
-		}
-		else
-		{
-			sektor[i].permintaan_terpenuhi = 1;
-		}
+		alokasikanKendaraan(&sektor[i], &jumlahBus, &jumlahAngkot);
 	}
 
 	printf("\n======= HASIL DISTRIBUSI KENDARAAN =======\n");
